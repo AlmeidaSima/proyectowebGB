@@ -1,0 +1,13 @@
+#tablaAutores {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tablaAutores, #tablaAutores th, #tablaAutores td {
+    border: 1px solid black;
+}
+
+#tablaAutores th, #tablaAutores td {
+    padding: 8px;
+    text-align: left;
+}

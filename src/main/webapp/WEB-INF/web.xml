@@ -4,13 +4,13 @@
     <description></description>
     <display-name>AutoresController</display-name>
     <servlet-name>AutoresController</servlet-name>
-    <servlet-class>com.unu.poo2.controlles.AutoresController</servlet-class>
+    <servlet-class>com.unu.proyectoWebGB.controllers.AutoresController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AutoresController</servlet-name>
     <url-pattern>/AutoresController</url-pattern>
   </servlet-mapping>
-  <display-name>proyectowebGB</display-name>
+  <display-name>proyectoWebGB</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -19,14 +19,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>AutoresControllers</display-name>
-    <servlet-name>AutoresControllers</servlet-name>
-    <servlet-class>com.unu.poo2.controlles.AutoresControllers</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AutoresControllers</servlet-name>
-    <url-pattern>/AutoresControllers</url-pattern>
-  </servlet-mapping>
 </web-app>

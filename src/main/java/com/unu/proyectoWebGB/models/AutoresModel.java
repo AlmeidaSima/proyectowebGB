@@ -1,18 +1,70 @@
 package com.unu.proyectoWebGB.models;
+
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 import com.unu.proyectoWebGB.beans.*;
 
-public class AutoresModel {
+public class AutoresModel extends Conexion {
+	CallableStatement cs;
+	ResultSet rs;
 
-	public List<Autor> listarAutores(){
-		
-		ArrayList<Autor> autores = new ArrayList<>();
-		autores.add(new Autor(1,"García Marquez", "Colombiana"));
-		autores.add(new Autor(2,"Borges", "Argentina"));
-		autores.add(new Autor(3,"Allende", "Chilena"));
-		return autores;
+	/*
+	 * ArrayList<Autor> autores = new ArrayList<>(); autores.add(new
+	 * Autor(1,"García Marquez", "Colombiano")); autores.add(new Autor(2,"Borges",
+	 * "Argentina")); autores.add(new Autor(3,"Allende", "Chilena")); return
+	 * autores;
+	 */
+
+	public List<Autor> listarAutores() throws SQLException {
+		try {
+			List<Autor> lista = new ArrayList<>();
+			String sql = "CALL sp_listarAutor()";
+			this.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			rs = cs.executeQuery();
+			while (rs.next()) {
+				Autor autor = new Autor();
+				autor.setIdAutor(rs.getInt("idautor"));
+				autor.setNombre(rs.getString("nombre"));
+				autor.setNacionalidad(rs.getString("nacionalidad"));
+				lista.add(autor);
+			}
+			this.cerrarConexion();
+			return lista;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			this.cerrarConexion();
+			;
+			return null;
+		}
 	}
 	
+	public int insertarAutor(Autor autor) throws SQLException {
+		try {
+			int filasAfectadas = 0;
+			String sql = "CALL sp_insertarAutor(?,?,?)";
+			this.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, autor.getIdAutor());
+			cs.setString(2, autor.getNombre());
+			cs.setString(3, autor.getNacionalidad());
+			filasAfectadas = cs.executeUpdate();
+			this.cerrarConexion();
+			return filasAfectadas;
+		} catch (SQLException ex) {
+			Logger.getLogger(AutoresModel.class.getName()).log(Level.SEVERE, null, ex);
+			this.cerrarConexion();
+			return 0;
+		}
+	}
+
+
 }

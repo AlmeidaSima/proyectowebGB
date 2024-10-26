@@ -50,12 +50,11 @@ public class AutoresModel extends Conexion {
 	public int insertarAutor(Autor autor) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL sp_insertarAutor(?,?,?)";
+			String sql = "CALL sp_insertarAutor(?,?)";
 			this.abrirConexion();
 			cs = conexion.prepareCall(sql);
-			cs.setInt(1, autor.getIdAutor());
-			cs.setString(2, autor.getNombre());
-			cs.setString(3, autor.getNacionalidad());
+			cs.setString(1, autor.getNombre());
+			cs.setString(2, autor.getNacionalidad());
 			filasAfectadas = cs.executeUpdate();
 			this.cerrarConexion();
 			return filasAfectadas;
@@ -65,6 +64,55 @@ public class AutoresModel extends Conexion {
 			return 0;
 		}
 	}
+	
+	
+	public Autor obtenerAutor(int idautor) {
+		
+		Autor autor = new Autor();
+		try {
+			String sql = "CALL sp_obtenerAutor(?)";
+			this.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, idautor);
+			if(rs.next()) {
+				autor = new Autor();
+				autor.setIdAutor(rs.getInt("idautor"));
+				autor.setNombre(rs.getString("nombre"));
+				autor.setNacionalidad(rs.getString("nacionalidad"));
+				this.cerrarConexion();
+				return autor;
+			}
+			
+		}catch (Exception e) {
+			this.cerrarConexion();
+			return null;
+		}
+		return autor;
+	}
+	
+	public int modificarAutor(Autor autor) throws SQLException {
+		try {
+			int filasAfectadas = 0;
+			String sql = "CALL sp_modificarAutor(?,?,?,?)";
+			this.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, autor.getIdAutor());
+			cs.setInt(2, autor.getIdAutor());
+			cs.setString(3, autor.getNombre());
+			cs.setString(4, autor.getNacionalidad());
+			filasAfectadas = cs.executeUpdate();
+			this.cerrarConexion();
+			return filasAfectadas;
+		} catch (SQLException ex) {
+			Logger.getLogger(AutoresModel.class.getName()).log(Level.SEVERE, null, ex);
+			this.cerrarConexion();
+			return 0;
+		}
+	}
+	
+
+	
+	
 
 
 }

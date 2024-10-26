@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,16 +7,36 @@
 <title>Insert title here</title>
 </head>
 <body>
-   <%
-   String url = "http://localhost:8089/proyectoWebGB/";
-   %>
-   <h3>Nuevo Autor</h3>
-   <form role="form" action="<%=url%>AutoresController" method="POST">
-   <input type="hidden" name="op" value="insertar">
-   Nombre del Autor <input type="text" name="nombreAutor" id="nombreAutor" ><br>
-   Nacionalidad <input type="text" name="nacionalidadAutor" id="nacionalidadAutor"><br>
-   <input type="submit" value="guardar" name="Guardar">
-   <a href="<%=url%>AutoresController?op=listar">Volver</a>
-   </form>
+	<%
+	String url = "http://localhost:8080/proyectowebGB/";
+	%>
+
+	<h3>Nuevo autor</h3>
+
+	<form role="form" action="<%=url%>AutoresController" method="POST">
+		<input type="hidden" name="op" value="insertar"> <label
+			for="nombre">Nombre del autor</label> <input type="text"
+			class="form-control" name="nombre" id="nombre" value=""
+			placeholder="Ingresa el nombre del autor"> <span
+			class="input-group-addon"><span
+			class="glyphicon 
+glyphicon-asterisk"></span></span>
+
+
+		<div class="form-group">
+			<label for="contacto">Nacionalidad del autor:</label>
+			<div class="input-group">
+				<input type="text" class="form-control" id="contacto" value=""
+					name="nacionalidad" placeholder="Ingresa la nacionalidad del autor">
+				<span class="input-group-addon"><span
+					class="glyphicon 
+glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+
+		<input type="submit" class="btn btn-info" value="Guardar"
+			name="Guardar"> <a class="btn btn-danger"
+			href="<%=url%>AutoresController?op=listar">Cancelar</a>
+	</form>
 </body>
 </html>

@@ -15,6 +15,7 @@
 
 	<form role="form" action="<%=url%>AutoresController" method="POST">
 		<input type="hidden" name="op" value="insertar"> <label
+		
 			for="nombre">Nombre del autor</label> <input type="text"
 			class="form-control" name="nombre" id="nombre" value=""
 			placeholder="Ingresa el nombre del autor"> <span

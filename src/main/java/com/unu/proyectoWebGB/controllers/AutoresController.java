@@ -53,10 +53,17 @@ public class AutoresController extends HttpServlet {
 		case "obtener":
 			obtener(request, response);
 			break;
+		case "modificar":
+			modificar(request, response);
+			break;
+		case "eliminar":
+			eliminar(request, response);
+			break;
 
 
 		}
 	}
+	
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,SQLException {
 		request.setAttribute("listaAutores", modelo.listarAutores());
@@ -92,7 +99,31 @@ public class AutoresController extends HttpServlet {
 		}
 	}
 	
-	private void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,SQLException {
+	private void modificar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			Autor miAutor = new Autor();
+			miAutor.setIdAutor(Integer.parseInt(request.getParameter("idautor")));
+			miAutor.setNombre(request.getParameter("nombre"));
+			miAutor.setNacionalidad(request.getParameter("nacionalidad"));
+			request.setAttribute("autor", miAutor);
+			//request.getRequestDispatcher("AutoresController?op=obtener").forward(request, response);
+
+			if (modelo.modificarAutor(miAutor) > 0) {
+				request.getSession().setAttribute("exito", "autor modificado exitosamente");
+				response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+			} else {
+				request.getSession().setAttribute("fracaso",
+						"El autor no ha sido modificado" + "ya hay un autor con este codigo");
+				response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+			}
+
+		} catch (IOException | SQLException ex) {
+			Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+private void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,SQLException {
 		try {
 			String id = request.getParameter("id");			
 			Autor miAutor = modelo.obtenerAutor(Integer.parseInt(id));
@@ -102,7 +133,7 @@ public class AutoresController extends HttpServlet {
 			
 			if (miAutor != null) {
 				request.setAttribute("autor", miAutor);
-				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
+				request.getRequestDispatcher("/autores/editarAutores.jsp").forward(request, response);
 			} else {
 				response.sendRedirect(request.getContextPath() + "/error404.jsp");
 			}
@@ -110,6 +141,23 @@ public class AutoresController extends HttpServlet {
 			Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+private void eliminar(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException,SQLException {
+	try {
+		int idautor = Integer.parseInt(request.getParameter("id")) ;
+		if (modelo.eliminarAutor(idautor) > 0) {
+			request.setAttribute("exito", "Autor eliminado exitosamente");
+
+		} else {
+			request.setAttribute("fracaso", "No se puede eliminar este autor");
+		}
+		request.getRequestDispatcher("/AutoresController?op=listar").forward(request, response);
+	} catch (SQLException | ServletException | IOException ex) {
+		Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+}
+
+
+
 
 
 

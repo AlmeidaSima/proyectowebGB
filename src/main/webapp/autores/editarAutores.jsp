@@ -5,6 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<link rel="stylesheet"
+href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min.js">
+</script>
+
 <title>Editar Autor</title>
 </head>
 <body>

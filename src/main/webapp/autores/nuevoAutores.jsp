@@ -4,8 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet"
+href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min.js">
+</script>
+
+<title>Cambiar Datos</title>
+
+<h1 align="center">Nuevo autor</h1>
 </head>
+<div class="container">
 <body>
 	<%
 	String url = "http://localhost:8080/proyectowebGB/";
@@ -40,4 +48,5 @@ glyphicon-asterisk"></span></span>
 			href="<%=url%>AutoresController?op=listar">Cancelar</a>
 	</form>
 </body>
+</div>
 </html>

@@ -1,6 +1,5 @@
 package com.unu.proyectoWebGB.controllers;
 import jakarta.servlet.ServletException;
-
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +31,8 @@ public class AutoresController extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+	throws ServletException, IOException, SQLException {
 
 		if (request.getParameter("op") == null) {
 			listar(request, response);
@@ -61,12 +61,11 @@ public class AutoresController extends HttpServlet {
 			eliminar(request, response);
 			break;
 
-
 		}
 	}
 	
-
-	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,SQLException {
+	private void listar(HttpServletRequest request, HttpServletResponse response) 
+	throws ServletException, IOException,SQLException {
 		request.setAttribute("listaAutores", modelo.listarAutores());
 	    Iterator<Autor> it = modelo.listarAutores().iterator();
 	    while(it.hasNext()) {
@@ -123,11 +122,13 @@ public class AutoresController extends HttpServlet {
 			Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-
-private void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,SQLException {
+	
+private void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, 
+IOException,SQLException {
 		try {
-			String id = request.getParameter("id");			
+			String id = request.getParameter("id").trim();
 			Autor miAutor = modelo.obtenerAutor(Integer.parseInt(id));
+
 			
 			System.out.println(miAutor.getIdAutor());
 			System.out.println(miAutor.getNombre());
@@ -142,23 +143,22 @@ private void obtener(HttpServletRequest request, HttpServletResponse response) t
 			Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-private void eliminar(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException,SQLException {
-	try {
-		int idautor = Integer.parseInt(request.getParameter("id")) ;
-		if (modelo.eliminarAutor(idautor) > 0) {
-			request.setAttribute("exito", "Autor eliminado exitosamente");
 
-		} else {
-			request.setAttribute("fracaso", "No se puede eliminar este autor");
-		}
-		request.getRequestDispatcher("/AutoresController?op=listar").forward(request, response);
-	} catch (SQLException | ServletException | IOException ex) {
-		Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
-	}
+private void eliminar(HttpServletRequest request, HttpServletResponse response) 
+		throws ServletException, IOException, SQLException {
+    try {
+        int idautor = Integer.parseInt(request.getParameter("id").trim());
+        if (modelo.eliminarAutor(idautor) > 0) {
+            request.getSession().setAttribute("exito", "Autor eliminado exitosamente");
+        } else {
+            request.getSession().setAttribute("fracaso", "No se puede eliminar este autor");
+        }
+        response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+    } catch (SQLException | IOException | NumberFormatException ex) {
+        Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
+        response.sendRedirect(request.getContextPath() + "/error500.jsp");
+    }
 }
-
-
-
 
 
 
@@ -191,5 +191,4 @@ private void eliminar(HttpServletRequest request, HttpServletResponse response) 
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -18,7 +18,6 @@ href="assets/css/bootstrap.min.css">
 	String url = "http://localhost:8080/proyectowebGB/";
 	Autor autor;
 	HttpSession sesion = request.getSession();
-
 	if (request.getAttribute("autor") == null) {
 		autor = new Autor();
 	} else {
@@ -27,14 +26,12 @@ href="assets/css/bootstrap.min.css">
 		System.out.println(autor.getNombre());
 	}
 	%>
-
 	<form role="form" action="<%=url%>AutoresController" method="POST">
 		<input type="hidden" name="op" value="modificar" />
 		<input type="hidden" name="idautor" value="<%=autor.getIdAutor()%>" />
 
 		<h1>REGISTRO DE AUTOR</h1>
-		Codigo: <input type="text" name="codigo"
-			value="<%=autor.getIdAutor()%>"> 
+		Codigo: <input type="text" name="codigo"value="<%=autor.getIdAutor()%>"> 
 		<br> Nombre: <input
 			type="text" name="nombre" value="<%=autor.getNombre()%>"> 
 		<br> Nacionalidad: <input type="text" name="nacionalidad" value="<%=autor.getNacionalidad()%>"> 

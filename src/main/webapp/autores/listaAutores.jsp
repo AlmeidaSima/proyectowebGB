@@ -7,18 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
 <link rel="stylesheet"
 href="assets/css/bootstrap.min.css">
 <script src="assets/js/bootstrap.min.js">
 </script>
-
-<script >
+<script>
 	function eliminar(id){
 		if(confirm("desea eliminar el registro")==true){
-			location.herf = "AtoresController?op=eliminar&id="+ id;
-		}else{
-			
+			location.href = "AutoresController?op=eliminar&id="+ id;
+		}else{			
 		}
 	}
 </script>
@@ -31,10 +28,7 @@ href="assets/css/bootstrap.min.css">
     %>
 	<h1>Lista de Elementos</h1>
 	<div class="container mt-6">
-    
-    <a class="btn btn-primary mb-3" href="<%=url%>AutoresController?op=nuevo">Nuevo autor</a>
-
-    
+    <a class="btn btn-primary mb-3" href="<%=url%>AutoresController?op=nuevo">Nuevo autor</a>  
     <table id="tablalista" class="table table-hover table-bordered">
         <thead>
             <tr class="table-primary text-center ">
@@ -54,13 +48,17 @@ href="assets/css/bootstrap.min.css">
                     <td><%= autor.getNacionalidad() %></td>
                     <td class="text-center">
                         <!-- Botones de operación -->
-                        <a class="btn btn-sm btn-warning" href="<%=url%>AutoresController?op=obtener&id=<%=autor.getIdAutor()%>">
+                        <a class="btn btn-sm btn-warning" href="<%=url%>AutoresController?op=obtener&id=
+                        <%=autor.getIdAutor()%>">
                             Modificar
                         </a>
-                        <a class="btn btn-sm btn-danger" href="<%=url%>AutoresController?op=eliminar&id=<%=autor.getIdAutor()%>">
+                        
+                    <!--    <a class="btn btn-sm btn-danger" href="<%=url%>AutoresController?op=eliminar&id=
+                        <%=autor.getIdAutor()%>">
                             Eliminar
-                        </a>
-                        <a herf="javascript:eliminar('<%=autor.getIdAutor() %>')"
+                        </a>-->
+                        
+                        <a href="javascript:eliminar('<%=autor.getIdAutor() %>')"
                         class="btn btn-danger">eliminar</a>
                     </td>
                 </tr>
@@ -72,7 +70,5 @@ href="assets/css/bootstrap.min.css">
         </tbody>
     </table>
 </div>
-
-	
 </body>
 </html>

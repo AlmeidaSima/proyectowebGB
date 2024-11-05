@@ -24,6 +24,7 @@ public class AutoresController extends HttpServlet {
 	AutoresModel modelo = new AutoresModel();
 
 	/**
+	 * @return 
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public AutoresController() {
